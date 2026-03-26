@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>SIA Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #eef2f7;
+  display: flex;
+  height: 100vh; 
+  overflow: hidden; 
+}
+
+
+.sidebar {
+  width: 220px;
+  background: linear-gradient(#00bcd4, #4caf50);
+  color: white;
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.sidebar h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 24px;
+}
+
+.sidebar .item {
+  background: rgba(255,255,255,0.15);
+  padding: 12px 15px;
+  border-radius: 12px;
+  transition: 0.3s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: white;
+}
+
+.sidebar .item:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+
+.main {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  overflow: hidden;
+}
+
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  height: 100%; 
+}
+
+
+.card {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+.azul { border-left: 8px solid #00bcd4; }
+.verde { border-left: 8px solid #4caf50; }
+.laranja { border-left: 8px solid #c75b39; }
+.amarelo { border-left: 8px solid #ffc107; }
+
+
+.card.umaidade {
+  max-width: 250px;
+  margin: auto;
+}
+
+
+.circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: conic-gradient(#c75b39 0%, #ddd 0%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin: auto;
+}
+
+
+.status {
+  font-weight: bold;
+}
+
+.on { color: green; }
+.off { color: red; }
+
+
+.side-grid {
+  display: grid;
+  gap: 20px;
+}
+</style>
+</head>
+
+<body>
+
+
+<div class="sidebar">
+  <h2>SIA</h2>
+  <div class="item">💧 Água</div>
+  <div class="item">🌱 Solo</div>
+  <div class="item">⚡ Sistema</div>
+  <div class="item">☀️ Clima</div>
+  <div class="item">🌧️ Chuva</div>
+
+    <footer>
+    <a href="Sistema_irrigacao_automatizado.html" class="item">🏠 Visão Geral</a>
+    <a href="historico.html" class="item">📋 Histórico de Regas</a>
+    </footer>
+</div>
+
+
+<div class="main">
+  <div class="grid">
+
+  
+    <div class="card laranja umaidade">
+      <h3>🌱 Umidade do Solo</h3>
+      <div class="circle" id="circle">68%</div>
+    </div>
+
+
+    <div class="side-grid">
+      <div class="card azul">
+        <h3>💧 Nível da Água</h3>
+        <h1 id="agua">85%</h1>
+      </div>
+
+      <div class="card verde">
+        <h3>⚡ Bomba</h3>
+        <p id="bomba" class="status on">Ligada</p>
+      </div>
+
+      <div class="card verde">
+        <h3>🚰 Reservatório</h3>
+        <p id="reservatorio">Aberto</p>
+      </div>
+
+      <div class="card amarelo">
+        <h3>☀️ Índice UV</h3>
+        <h2 id="uv">5</h2>
+      </div>
+
+      <div class="card azul">
+        <h3>🌧️ Chuva</h3>
+        <p id="chuva">Não</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+function atualizarCirculo(valor) {
+  const circle = document.getElementById("circle");
+  circle.style.background = `conic-gradient(#c75b39 ${valor}%, #ddd ${valor}%)`;
+  circle.innerText = valor + "%";
+}
+
+
+setInterval(() => {
+  let umidade = Math.floor(Math.random() * 100);
+  let agua = Math.floor(Math.random() * 100);
+  let uv = Math.floor(Math.random() * 11);
+
+  atualizarCirculo(umidade);
+
+  document.getElementById("agua").innerText = agua + "%";
+  document.getElementById("uv").innerText = uv;
+
+  let chovendo = Math.random() > 0.5;
+  document.getElementById("chuva").innerText = chovendo ? "Sim" : "Não";
+
+  let bomba = Math.random() > 0.5;
+  document.getElementById("bomba").innerText = bomba ? "Ligada" : "Desligada";
+  document.getElementById("bomba").className = "status " + (bomba ? "on" : "off");
+
+  document.getElementById("reservatorio").innerText = chovendo ? "Aberto" : "Fechado";
+}, 2000);
+</script>
+
+</body>
+</html>
